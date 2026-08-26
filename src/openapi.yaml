@@ -1,0 +1,75 @@
+openapi: 3.0.1
+info:
+  title: API de Cuentas Bancarias
+  version: '1.0'
+paths:
+  /accounts:
+    get:
+      summary: Obtener todas las cuentas
+      responses:
+        '200':
+          description: Lista de cuentas
+    post:
+      summary: Crear una cuenta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountDto'
+      responses:
+        '201':
+          description: Cuenta creada
+  /accounts/{id}:
+    put:
+      summary: Actualizar una cuenta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccountDto'
+      responses:
+        '200':
+          description: Cuenta actualizada
+    delete:
+      summary: Eliminar una cuenta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Cuenta eliminada
+components:
+  schemas:
+    CreateAccountDto:
+      type: object
+      required:
+        - accountNumber
+        - accountType
+        - balance
+      properties:
+        accountNumber:
+          type: string
+        accountType:
+          type: string
+        balance:
+          type: number
+    UpdateAccountDto:
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        accountType:
+          type: string
+        balance:
+          type: number
